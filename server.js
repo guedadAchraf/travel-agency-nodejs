@@ -1,4 +1,5 @@
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '.env.development.local') });
 const express = require('express');
 const cors = require('cors');
 const winston = require('winston');
@@ -63,7 +64,12 @@ app.use((err, req, res, next) => {
 });
 
 // Set port and listen for requests
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8081;
+
+// Remove this duplicate listen call
+// app.listen(PORT, () => {
+//   console.log(`Server is running on port ${PORT}`);
+// });
 
 db.sequelize.sync()
   .then(() => {
